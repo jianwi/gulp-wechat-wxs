@@ -6,6 +6,14 @@ function bar() {
     return `the result is ${a} ${b} ${c+f+d+v}`
 }
 
+// 兼容换行
+function muilti(radius, colors,i,num) {
+    return `width:${2*radius}px;height:${2*radius}px;
+          clip-path: ellipse(50% 50% at 50% ${100 + (Math.abs(radius * Math.cos(Math.PI / num)))/(2*radius)*100}%);
+          top:-${Math.abs(radius * Math.cos(Math.PI / num)) -.5}px;
+          background: ${colors[(i==num && (i-1)%colors.length == 0) ? 1:(i-1)%colors.length]};
+      `
+}
 module.exports = {
     foo: foo
 }

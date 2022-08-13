@@ -19,10 +19,11 @@ function parseWxml(content) {
 // 解析 wxs
 function jsStyle2wxs(content){
     content = content.replace(/(?<=(^|;|\s))(let|const)/g,"var")
-    let templatesString = content.match(/`.*?`(?<!\\`)/g)
+    let templatesString = content.match(/`[\W\w]*?`(?<!\\`)/gm)
     if (!templatesString) return content
     for (let str of templatesString){
         let res_str = str.replace(/"/g,'\\"')
+        res_str = res_str.replaceAll(/\n/g,'"+\n+"')
         res_str = res_str.replaceAll(/(?<!\\)\$\{(.*?)\}(?<!\\})/g,`" + ($1) + "`)
         res_str = `"${res_str.slice(1,res_str.length - 1)}"`
         content = content.replace(str,res_str)
