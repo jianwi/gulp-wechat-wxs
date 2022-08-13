@@ -23,7 +23,7 @@ function jsStyle2wxs(content){
     if (!templatesString) return content
     for (let str of templatesString){
         let res_str = str.replace(/"/g,'\\"')
-        res_str = res_str.replaceAll(/\$\{(.*?)\}(?<!\\})/g,`" + ($1) + "`)
+        res_str = res_str.replaceAll(/(?<!\\)\$\{(.*?)\}(?<!\\})/g,`" + ($1) + "`)
         res_str = `"${res_str.slice(1,res_str.length - 1)}"`
         content = content.replace(str,res_str)
     }
@@ -32,7 +32,13 @@ function jsStyle2wxs(content){
 
 module.exports = function () {
     return through2.obj((file,_,cb)=>{
-        file.contents = Buffer.from(parseWxml(file.contents.toString()))
-        cb(null, file)
+        let contents = file.contents.toString()
+        let resultContents = parseWxml(contents)
+        file.contents = Buffer.from(resultContents)
+        if (contents !== resultContents){
+            cb(null, file)
+        }else {
+            cb()
+        }
     })
 }

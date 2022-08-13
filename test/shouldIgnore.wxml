@@ -1,0 +1,6 @@
+<view>这个文件不需要处理</view>
+<wxs>
+function f() {
+    
+}
+</wxs>

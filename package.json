@@ -8,10 +8,16 @@
   "scripts": {
     "test": "gulp"
   },
-  "keywords": ["微信小程序","wxss","wechat","miniprogram"],
+  "keywords": [
+    "微信小程序",
+    "wxss",
+    "wechat",
+    "miniprogram"
+  ],
   "author": "dujianjun",
   "license": "MIT",
   "devDependencies": {
+    "gulp": "^4.0.2",
     "through2": "^4.0.2"
   }
 }

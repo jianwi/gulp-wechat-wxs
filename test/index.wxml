@@ -8,8 +8,5 @@
 <view>支持在wxml里嵌入的wxs代码</view>
 
 <wxs module="ttt">
-    function tt() {
-        let a = 123
-        return `answer is ${a} haha`
-    }
+    const a = `可以在\${}中进行一些支持的运算。`;
 </wxs>

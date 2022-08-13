@@ -1,7 +1,9 @@
-function foo() {
-    const b = `say hihi ${hello}`;let eee = '不换行也可以识别';const rrr = `${b}`
-    let a = `1+15 equals to "${1+15}"`;
-    return `the return is ${b+a}`
+function bar() {
+    const a = `可以在\${}中进行一些支持的运算。${Math.PI * 2} is PI`;
+    const b = `转义的字符也会被正确处理\`,Dont worry.`
+    const c = `\${} 这个不会被误处理,${ 'c' + '\}'} 这个也不会被误处理`
+    let f=1;let d=3;const v=4; // 不换行也可以检测到
+    return `the result is ${a} ${b} ${c+f+d+v}`
 }
 
 module.exports = {
