@@ -34,7 +34,7 @@ const GulpWechatWXS = require("gulp-wechat-wxs")
 function defaultTask(cb) {
     return src(["**/**.wxs","**/**.wxml"])
         .pipe(GulpWechatWXS())
-        .pipe(dest("."))
+        .pipe(dest("./"))
 }
 
 exports.default = defaultTask
@@ -46,18 +46,15 @@ exports.default = defaultTask
 ```xml
 <wxs module="ddd">
     function f() {
-    let a = 123333
-    return `answer is ${a+100} haha`
+    var a = 123333
+    return "answer is " + (a+100) + " haha"
     }
 </wxs>
 
 <view>支持在wxml里嵌入的wxs代码</view>
 
 <wxs module="ttt">
-function tt() {
-let a = 123
-return `answer is ${a} haha`
-}
+var a = "可以在\${}中进行一些支持的运算。";
 </wxs>
 ```
 处理后的文件
@@ -72,19 +69,18 @@ return `answer is ${a} haha`
 <view>支持在wxml里嵌入的wxs代码</view>
 
 <wxs module="ttt">
-function tt() {
-var a = 123
-return "answer is " + (a) + " haha"
-}
+var a = "可以在\${}中进行一些支持的运算。";
 </wxs>
 ```
 ## 2. 支持 wxs 文件
 源文件
 ```javascript
-function foo() {
-    const b = `say hihi ${hello}`;let eee = '不换行也可以识别';const rrr = `${b}`
-    let a = `1+15 equals to "${1+15}"`;
-    return `the return is ${b+a}`
+function bar() {
+    const a = `可以在\${}中进行一些支持的运算。${Math.PI * 2} is PI`;
+    const b = `转义的字符也会被正确处理\`,Dont worry.`
+    const c = `\${} 这个不会被误处理,${ 'c' + '\}'} 这个也不会被误处理`
+    let f=1;let d=3;const v=4; // 不换行也可以检测到
+    return `the result is ${a} ${b} ${c+f+d+v}`
 }
 
 module.exports = {
@@ -93,13 +89,28 @@ module.exports = {
 ```
 处理后的文件
 ```javascript
-function foo() {
-    var b = "say hihi " + (hello) + "";var eee = '不换行也可以识别';var rrr = "" + (b) + ""
-    var a = "1+15 equals to \"" + (1+15) + "\"";
-    return "the return is " + (b+a) + ""
+function bar() {
+    var a = "可以在\${}中进行一些支持的运算。" + (Math.PI * 2) + " is PI";
+    var b = "转义的字符也会被正确处理\`,Dont worry."
+    var c = "\${} 这个不会被误处理," + ( 'c' + '\}') + " 这个也不会被误处理"
+    var f=1;var d=3;var v=4; // 不换行也可以检测到
+    return "the result is " + (a) + " " + (b) + " " + (c+f+d+v) + ""
 }
 
 module.exports = {
     foo: foo
 }
+```
+
+# 暂不支持的用法
+> 由于js中的正则表达式不支持平衡组，类似`"${xxx}}} ${123}"`这种的字符串,没法知道应该匹配到哪一个`}`才算完。
+
+不能在 `${}` 中 嵌套对象，比如
+```javascript
+`${ {a:1} }`
+`${JSON.stringify({a:1})}`
+// 上面两种写法都是不支持的
+// 但是支持转义,下面的写法都会被正确处理
+`\${}`
+`${'\}'}`
 ```
