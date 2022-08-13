@@ -46,15 +46,15 @@ exports.default = defaultTask
 ```xml
 <wxs module="ddd">
     function f() {
-    var a = 123333
-    return "answer is " + (a+100) + " haha"
+    let a = 123333
+    return `answer is ${a+100} haha`
     }
 </wxs>
 
 <view>支持在wxml里嵌入的wxs代码</view>
 
 <wxs module="ttt">
-var a = "可以在\${}中进行一些支持的运算。";
+const a = `可以在\${}中进行一些支持的运算。`;
 </wxs>
 ```
 处理后的文件
