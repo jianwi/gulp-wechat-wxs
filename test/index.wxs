@@ -1,0 +1,9 @@
+function foo() {
+    const b = `say hihi ${hello}`;let eee = '不换行也可以识别';const rrr = `${b}`
+    let a = `1+15 equals to "${1+15}"`;
+    return `the return is ${b+a}`
+}
+
+module.exports = {
+    foo: foo
+}
