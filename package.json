@@ -1,6 +1,6 @@
 {
   "name": "gulp-wechat-wxs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "homepage": "https://github.com/jianwi/gulp-wechat-wxs",
   "repository": "https://github.com/jianwi/gulp-wechat-wxs",
   "description": "在wxs(微信小程序脚本语言)里写模板字符串，以及用 let 和 const 声明变量",
